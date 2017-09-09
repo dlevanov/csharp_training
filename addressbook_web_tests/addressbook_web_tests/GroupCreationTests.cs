@@ -46,9 +46,9 @@ namespace GroupCreationTests
             Auth("admin", "secret");
             ClickLink("groups");
             ClickCreateButton();
-            Group group = new Group("aaaaa");
-            group.Header = "bbbbb";
-            group.Footer = "ccccc";
+            Group group = new Group("d");
+            group.Header = "e";
+            group.Footer = "f";
             InsertDataGroup(group);
             SubmitDataGroup();
             ClickLink("group page");
