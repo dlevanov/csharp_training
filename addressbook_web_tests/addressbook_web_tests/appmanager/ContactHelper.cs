@@ -10,59 +10,19 @@ using OpenQA.Selenium.Support.UI;
 
 namespace addressbook_web_tests
 {
-    public class BaseClass
+    public class ContactHelper : BaseHelper
     {
-        protected IWebDriver driver;
-        protected StringBuilder verificationErrors;
-        protected string baseURL;
-        protected bool acceptNextAlert = true;
-
-        [SetUp]
-        protected void SetupTest()
+        public ContactHelper(IWebDriver driver) : base(driver)
         {
-            driver = new FirefoxDriver(new FirefoxBinary("C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"), new FirefoxProfile());
-            baseURL = "http://localhost/";
-            verificationErrors = new StringBuilder();
         }
 
-        [TearDown]
-        protected void TeardownTest()
-        {
-            driver.Quit();
-        }
-
-        protected void AuthAddressbook(string login, string password)
-        {
-            driver.Navigate().GoToUrl(baseURL + "addressbook/");
-            driver.FindElement(By.Name("user")).Clear();
-            driver.FindElement(By.Name("user")).SendKeys(login);
-            driver.FindElement(By.Name("pass")).Clear();
-            driver.FindElement(By.Name("pass")).SendKeys(password);
-            driver.FindElement(By.CssSelector("input[type=\"submit\"]")).Click();
-        }
-
-        protected void ExitAddressbook()
-        {
-            ClickLink("home");
-            ClickLink("Logout");
-        }
-
-        protected void ClickLink(string link)
-        {
-            driver.FindElement(By.LinkText(link)).Click();
-        }
-
-        protected void ClickButton(string attrName)
-        {
-            driver.FindElement(By.Name(attrName)).Click();
-        }
-
-        protected void SubmitDataContact()
+        public ContactHelper SubmitDataContact()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            return this;
         }
 
-        protected void InsertDataContact(Contact contact)
+        public ContactHelper InsertDataContact(Contact contact)
         {
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(contact.Lastname);
@@ -109,16 +69,7 @@ namespace addressbook_web_tests
             driver.FindElement(By.Name("phone2")).SendKeys(contact.Phone2);
             driver.FindElement(By.Name("notes")).Clear();
             driver.FindElement(By.Name("notes")).SendKeys(contact.Notes);
+            return this;
         }
-
-        protected void InsertDataGroup(Group group)
-        {
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
-        }   
     }
 }

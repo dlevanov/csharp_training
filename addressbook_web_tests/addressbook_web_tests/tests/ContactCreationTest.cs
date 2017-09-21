@@ -12,16 +12,16 @@ namespace addressbook_web_tests
         [Test]
         public void ContactCreationTests()
         {
-            AuthAddressbook("admin", "secret");
-            ClickLink("add new");
-            Contact contact = new Contact("Думадельников", "Тихомир");
+            app.Auth.AuthAddressbook("admin", "secret");
+            app.Def.ClickLink("add new");
+            Contact contact = new Contact("Фамилия 2", "Имя 2");
             contact.Middlename = "";
             contact.Nickname = "";
             contact.Title = "";
             contact.Company = "";
-            contact.Address = "г.Симсити, ул.Садовая, д.11";
+            contact.Address = "г.Симсити, ул.Садовая, д.2";
             contact.Home = "";
-            contact.Mobile = "+7(900)000-11-22";
+            contact.Mobile = "+2(222)222-22-22";
             contact.Work = "";
             contact.Fax = "";
             contact.Email = "";
@@ -31,9 +31,9 @@ namespace addressbook_web_tests
             contact.Address2 = "";
             contact.Phone2 = "";
             contact.Notes = "";
-            InsertDataContact(contact);
-            ClickButton("submit");
-            ExitAddressbook();
+            app.Contacts.InsertDataContact(contact);
+            app.Def.ClickButton("submit");
+            app.Out.ExitAddressbook();
         }
     }
 }
