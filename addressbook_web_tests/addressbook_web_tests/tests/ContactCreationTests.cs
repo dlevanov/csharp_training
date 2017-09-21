@@ -32,7 +32,8 @@ namespace addressbook_web_tests
             contact.Phone2 = "";
             contact.Notes = "";
             app.Contacts.InsertDataContact(contact);
-            app.Def.ClickButton("submit");
+            app.Def.ClickButton("submit")
+                .ClickId("logo");
             app.Out.ExitAddressbook();
         }
     }

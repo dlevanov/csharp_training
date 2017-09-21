@@ -16,11 +16,11 @@ namespace addressbook_web_tests
         private string baseURL;
         private DefaultActionsHelper defHelper;
 
-        public NavigationHelper(IWebDriver driver, string baseURL)
+        public NavigationHelper(IWebDriver driver, string baseURL, DefaultActionsHelper defHelper)
         {
             this.driver = driver;
             this.baseURL = baseURL;
-            //defHelper = new DefaultActionsHelper(driver);
+            this.defHelper = defHelper;
         }
 
         public void AuthAddressbook(string login, string password)
@@ -41,6 +41,36 @@ namespace addressbook_web_tests
         public void OpenContactsPage()
         {
             defHelper.ClickLink("home");
+        }
+
+        public void OpenNextBirthdayPage()
+        {
+            defHelper.ClickLink("next birthdays");
+        }
+
+        public void OpenPrintAllPage()
+        {
+            defHelper.ClickLink("print all");
+        }
+
+        public void OpenPrintPhonesPage()
+        {
+            defHelper.ClickLink("print phones");
+        }
+
+        public void OpenMapPage()
+        {
+            defHelper.ClickLink("map");
+        }
+
+        public void OpenExportPage()
+        {
+            defHelper.ClickLink("export");
+        }
+
+        public void OpenImportPage()
+        {
+            defHelper.ClickLink("import");
         }
     }
 }

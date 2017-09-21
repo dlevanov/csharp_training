@@ -19,7 +19,8 @@ namespace addressbook_web_tests
             group.Header = "Group_(test_21.09.2017)_header";
             group.Footer = "Group_(test_21.09.2017)_footer";
             app.Groups.InsertDataGroup(group);
-            app.Def.ClickButton("submit");
+            app.Def.ClickButton("submit")
+                .ClickId("logo");
             app.Out.ExitAddressbook();
         }
     }

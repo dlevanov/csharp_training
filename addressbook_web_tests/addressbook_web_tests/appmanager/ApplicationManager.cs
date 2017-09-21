@@ -30,7 +30,7 @@ namespace addressbook_web_tests
             defHelper = new DefaultActionsHelper(driver);
             loginHelper = new LoginHelper(driver, baseURL);
             logoutHelper = new LogoutHelper(driver, defHelper);
-            navHelper = new NavigationHelper(driver, baseURL);
+            navHelper = new NavigationHelper(driver, baseURL, defHelper);
             contactHelper = new ContactHelper(driver);
             groupHelper = new GroupHelper(driver);
         }
