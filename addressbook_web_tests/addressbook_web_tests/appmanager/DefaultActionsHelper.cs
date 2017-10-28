@@ -57,5 +57,34 @@ namespace addressbook_web_tests
             driver.SwitchTo().Alert().Accept();
             return this;
         }
+
+        public bool Visible(string xpath)
+        {
+            var element = driver.FindElement(By.XPath(xpath));
+            if (element.Displayed && element.Enabled)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsElementPresent(string xpath)
+        {
+            try
+            {
+                driver.FindElement(By.XPath(xpath));
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
+
+
     }
 }
