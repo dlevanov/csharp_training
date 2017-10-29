@@ -14,6 +14,7 @@ namespace addressbook_web_tests
         {
             app.Auth.AuthAddressbook("admin", "secret");
             app.Def.ClickLink("groups");
+            int res1 = app.Def.CountGroupList("span>input");
             if (!(app.Def.IsElementPresent("//*[@id='content']/form/span/input")))
             {
                 app.Def.ClickLink("groups")
@@ -31,8 +32,10 @@ namespace addressbook_web_tests
             group.Header = "ModifGroup_(edit)_header";
             group.Footer = "ModifGroup_(edit)_footer";
             app.Groups.EditDataGroup(group);
-            app.Def.ClickButton("update")
-                .ClickId("logo");
+            app.Def.ClickButton("update");
+            int res2 = app.Def.CountGroupList("span>input");
+            Assert.AreEqual(res1, res2);
+            app.Def.ClickId("logo");
             app.Out.ExitAddressbook();
         }
     }

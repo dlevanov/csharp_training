@@ -14,6 +14,7 @@ namespace addressbook_web_tests
         {
             app.Auth.AuthAddressbook("admin", "secret");
             app.Def.ClickLink("groups");
+            int res1 = app.Def.CountGroupList("span>input");
             if (!(app.Def.IsElementPresent("//*[@id='content']/form/span/input")))
             {
                 app.Def.ClickLink("groups")
@@ -26,8 +27,10 @@ namespace addressbook_web_tests
             }
             app.Def.ClickLink("groups")
                 .ClickCheckBox(1)
-                .ClickButton("delete")
-                .ClickId("logo");
+                .ClickButton("delete");
+            int res2 = app.Def.CountGroupList("span>input");
+            Assert.AreEqual(res1, res2);
+            app.Def.ClickId("logo");
             app.Out.ExitAddressbook();
         }
     }

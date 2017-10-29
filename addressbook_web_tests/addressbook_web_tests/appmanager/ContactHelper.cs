@@ -122,5 +122,140 @@ namespace addressbook_web_tests
             driver.FindElement(By.Name("notes")).SendKeys(contact.Notes);
             return this;
         }
+
+        public int CountContactList(string css)
+        {
+            driver.FindElement(By.LinkText("home")).Click();
+            ICollection<IWebElement> elm = driver.FindElements(By.CssSelector(css));
+            if (elm.Count == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return elm.Count;//Console.WriteLine(elmArr.Count);
+            }           
+        }
+
+        public string[,] ReturnContactList(string css, string nm, string snm)
+        {
+            ICollection<IWebElement> elmID = driver.FindElements(By.CssSelector(css));
+            ICollection<IWebElement> Name = driver.FindElements(By.CssSelector(nm));
+            ICollection<IWebElement> Surname = driver.FindElements(By.CssSelector(snm));
+            string[,] R = null;
+
+            if (elmID.Count == 0)
+            {
+                return R;
+            }
+            else
+            {
+                string data = null;
+
+                string[] arrID = new string[elmID.Count];
+                string[] arrName = new string[elmID.Count];
+                string[] arrSurname = new string[elmID.Count];
+
+                string[,] resArray = new string[3, elmID.Count];
+
+                foreach (var item in elmID)
+                {
+                    data = item.GetAttribute("id");
+                    for (int i = 0; i < elmID.Count; i++)
+                    {
+                        arrID[i] = data;
+                    }
+                    //Console.WriteLine(item.GetAttribute("id"));
+                }
+                foreach (var item in Name)
+                {
+                    data = item.Text;
+                    for (int i = 0; i < Name.Count; i++)
+                    {
+                        arrName[i] = data;
+                    }
+                    //Console.WriteLine(item.Text);
+                }
+                foreach (var item in Surname)
+                {
+                    data = item.Text;
+                    for (int i = 0; i < Surname.Count; i++)
+                    {
+                        arrSurname[i] = data;
+                    }
+                    //Console.WriteLine(item.Text);
+                }
+                for (int i = 0; i < elmID.Count; i++)
+                {
+                    resArray[0, i] = arrID[i];
+                    resArray[1, i] = arrName[i];
+                    resArray[2, i] = arrSurname[i];
+                }
+                R = resArray;
+                //Console.WriteLine(resArray[2,1]);  
+                return R;
+            }        
+        }
+
+        public bool CompareContactList(string[,] oldData, string[,] newData, string option)
+        {
+            if (oldData == null || newData == null)
+            {
+                return true;
+            }
+            bool R = false;
+            int Cnt = 0;
+            int maxIndexK = 0;
+
+            if (oldData.Length < newData.Length)
+            {
+                Cnt = oldData.Length;
+                //Console.WriteLine("old "+ oldData.Length);
+            }
+            else
+            {
+                Cnt = newData.Length;
+                //Console.WriteLine("new " + newData.Length);
+            }
+
+            if (Cnt / 3 == 1)
+            {
+                return true;
+            }
+
+            switch (option)
+            {
+                case "create":
+                    maxIndexK = 0;
+                    break;
+                case "delete":
+                    maxIndexK = 1;
+                    break;
+                case "modif":
+                    maxIndexK = 1;
+                    break;
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < Cnt / 3; j++)
+                {
+                    for (int k = maxIndexK; k < Cnt / 3; k++)
+                    {
+                        if (oldData[i, j] == newData[i, k])
+                        {
+                            //Console.WriteLine("true");
+                            //Console.WriteLine(oldData[i, j] + "==" + newData[i, j]);
+                            R = true;
+                        }
+                        else
+                        {
+                            //Console.WriteLine("false");
+                            R = false; return false;
+                        }
+                    }
+                }
+            } return R;
+        }
     }
 }

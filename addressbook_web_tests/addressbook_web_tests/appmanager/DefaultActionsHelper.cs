@@ -58,19 +58,6 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public bool Visible(string xpath)
-        {
-            var element = driver.FindElement(By.XPath(xpath));
-            if (element.Displayed && element.Enabled)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public bool IsElementPresent(string xpath)
         {
             try
@@ -84,7 +71,18 @@ namespace addressbook_web_tests
             }
         }
 
-
-
+        public int CountGroupList(string css)
+        {
+            driver.FindElement(By.LinkText("groups")).Click();
+            ICollection<IWebElement> elm = driver.FindElements(By.CssSelector(css));
+            if (elm.Count == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return elm.Count;//Console.WriteLine(elmArr.Count);
+            }                
+        }
     }
 }
